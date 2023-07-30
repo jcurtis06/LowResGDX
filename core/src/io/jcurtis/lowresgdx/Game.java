@@ -14,15 +14,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * This may not be the best way to do it, but it works for me.
  */
 public class Game extends ApplicationAdapter {
-	private static final int SCALE = 2;
-
 	// The virtual resolution of the game in pixels
-	private static int VIRTUAL_WIDTH = 320;
-	private static int VIRTUAL_HEIGHT = 240;
-
-	// The actual resolution of the screen
-	private static final int SCREEN_WIDTH = VIRTUAL_WIDTH*2;
-	private static final int SCREEN_HEIGHT = VIRTUAL_HEIGHT*2;
+	// Lower values will zoom in, higher values will zoom out
+	private static final int VIRTUAL_WIDTH = 320;
+	private static final int VIRTUAL_HEIGHT = 180;
 
 	SpriteBatch batch;
 
@@ -73,10 +68,8 @@ public void render () {
 	System.out.println(sprite.getX());
 
 	// Move the camera to the player
-	// Not sure why I have to add VIRTUAL_WIDTH/4 and VIRTUAL_HEIGHT/4 to the player's position.
-	// But it works. lol.
-	camera.position.x = sprite.getX()+VIRTUAL_WIDTH/4+sprite.getWidth()/2;
-	camera.position.y = sprite.getY()+VIRTUAL_HEIGHT/4+sprite.getHeight()/2;
+	camera.position.x = sprite.getX()+sprite.getWidth()/2;
+	camera.position.y = sprite.getY()+sprite.getHeight()/2;
 
 	// Always update the camera after changing its position
 	camera.update();
@@ -113,7 +106,7 @@ public void render () {
 
 	// Render the FrameBuffer to the screen, scaling it to the screen's resolution
 	batch.begin();
-	batch.draw(frameBuffer.getColorBufferTexture(), 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, 1, 1);
+	batch.draw(frameBuffer.getColorBufferTexture(), 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight(), 0, 0, 1, 1);
 	batch.end();
 }
 
